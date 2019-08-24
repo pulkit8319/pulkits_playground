@@ -1,5 +1,7 @@
 package linkedList;
 
+import java.util.List;
+
 import linkedList.List.LinkedList;
 import linkedList.List.ListNode;
 
@@ -13,7 +15,7 @@ public class ReverseSinglyLinkedList {
 		list.insert("23", 90);
 		list.insert("45", 90);
 		list.printList();
-		reverseListIterative(list.head);
+		reverseListRecursive(list.head);
 		System.out.println("-----------------");
 		list.printList();
 	}
@@ -29,5 +31,16 @@ public class ReverseSinglyLinkedList {
 		}
 		list.head = prev;
 		return list.head;
+	}
+	
+	private static void reverseListRecursive(ListNode current) {
+		if(current.next==null) {
+			list.head = current;
+			return;
+		}
+		reverseListRecursive(current.next);
+		ListNode q = current.next;
+		q.next = current;
+		current.next = null;
 	}
 }
