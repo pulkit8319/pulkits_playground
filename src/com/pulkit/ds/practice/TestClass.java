@@ -1,36 +1,24 @@
 package com.pulkit.ds.practice;
 
-import java.util.HashSet;
-import java.util.Set;
+interface Interf {
+	public int m1(int a, int b);
+}
 
 public class TestClass {
 
 	public static void main(String[] args) {
-		Person p1 = new Person();
-		p1.setId(1);
-		p1.setName("Pulkit11");
-		p1.setTitle("qa");
-		Person p2 = new Person();
-		p2.setId(1);
-		p2.setName("Pulkit");
-		p2.setTitle("qa");
-
-		Set<Person> setPerson = new HashSet<>();
-		setPerson.add(p1);
-		setPerson.add(p2);
-		System.out.println(setPerson);
-		
-		
-		  final String s1 = "abc";
-		  String s2 = s1 + "def";
-		  String s12 = "abcdef";
-		  System.out.println(s2);
-		  System.out.println(s12 == s2); // true as the s2 create in string pool since final is there
-		  String s3 = "abc";
-		  String s4 = s3 + "def";
-		  System.out.println(s12 == s4);
+		Runnable r = ()->{
+			for(int i=0;i<10;i++) {
+			System.out.println("child");
+			}
+		};
+		Thread th = new Thread(r);
+		th.start();
+		for(int i=0;i<10;i++) {
+			System.out.println("main");
+		}
 	}
-	
+
 }
 
 class Person {

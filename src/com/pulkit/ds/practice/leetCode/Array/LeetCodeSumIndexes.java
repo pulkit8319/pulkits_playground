@@ -1,4 +1,4 @@
-package com.pulkit.ds.practice;
+package com.pulkit.ds.practice.leetCode.Array;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -6,24 +6,15 @@ import java.util.Map;
 
 //Given an array of integers, return indices of the two numbers such that they add up to a specific target.
 //You may assume that each input would have exactly one solution, and you may not use the same element twice.
-public class LeetCodeBuyAndSellStock2 {
+public class LeetCodeSumIndexes {
 	
 	public static void main(String[] args) {
-		int arr[] = {3,3};
-		int b[] = twoSumMap(arr, 6);
-		System.out.println(b[0]+"    "+b[1]);
-	}
-	
-	 private static int[] twoSumMap(int[] arr, int target) { 
-		 Map<Integer,Integer> map = new HashMap<>();
-		 for (int j = 0; j < arr.length; j++) {
-			int temp = target - arr[j];
-			if(map.containsKey(temp)) {
-				return new int[] {map.get(temp),j};
-			}
-			map.put(arr[j], j);
+		int arr[] = {3,2,4};
+		int target = 5;
+		int newNum[] = twoSumUsingMap(arr, target);	
+		for (int i = 0; i < newNum.length; i++) {
+			System.out.println(newNum[i]);
 		}
-		return null;
 	}
 
 	public static int[] twoSum(int[] nums, int target) {
@@ -60,5 +51,17 @@ public class LeetCodeBuyAndSellStock2 {
 		}
 	        return arr;
 	    }
+										//3,2,4			//6
+	public static int[] twoSumUsingMap(int[] nums, int target) {
+		Map<Integer,Integer> map = new HashMap<>();//{3,0},{4,1}
+		for (int i = 0; i < nums.length; i++) {
+			if(map.containsKey(nums[i])) {
+				return new int[] {map.get(nums[i]),i};
+			}else {
+				map.put(target-nums[i], i);
+			}
+		}
+		return new int[2];
+	}
 
 }

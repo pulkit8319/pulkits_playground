@@ -3,7 +3,7 @@ package com.pulkit.ds.practice;
 public class DollsInsideDoll {
 
 	public static void main(String[] args) {
-		int arr[] = {1,1};
+		int arr[] = {1,2,3};
 		int minDolls = getMinDolls(arr);
 		System.out.println(minDolls);
 
