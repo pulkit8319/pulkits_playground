@@ -1,4 +1,4 @@
-package com.pulkit.ds.practice.gfg.Tree;
+package com.pulkit.ds.practice.leetCode.gfg.Tree;
 
 import java.util.LinkedList;
 import java.util.Queue;
