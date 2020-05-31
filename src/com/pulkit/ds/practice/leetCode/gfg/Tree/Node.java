@@ -3,7 +3,7 @@ package com.pulkit.ds.practice.leetCode.gfg.Tree;
 public class Node {
 
 	int data;
-	Node left,right = null;
+	public Node left,right,next = null;
 	
 	public Node(int data) {
 		this.data = data;

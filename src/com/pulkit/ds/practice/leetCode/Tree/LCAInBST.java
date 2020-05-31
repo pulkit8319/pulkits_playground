@@ -1,10 +1,5 @@
 package com.pulkit.ds.practice.leetCode.Tree;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
-
 //Given a binary search tree (BST), find the lowest common ancestor (LCA) of two given nodes in the BST.
 public class LCAInBST {
 

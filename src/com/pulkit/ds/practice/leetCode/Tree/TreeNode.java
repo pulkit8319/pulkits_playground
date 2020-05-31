@@ -25,4 +25,9 @@ public class TreeNode {
 		System.out.print(node.val+" ");
 		inOrder(node.right);
 	}
+	
+	@Override
+	public String toString() {
+		return ""+this.val;
+	}
 }
