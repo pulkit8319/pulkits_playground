@@ -6,44 +6,40 @@ package com.pulkit.ds.practice.leetCode.Tree;
 public class LongestUnivaluePath {
 
 	public static void main(String[] args) {
-		TreeNode root = new TreeNode(5);
+		TreeNode root = new TreeNode(1);
 		root.left = new TreeNode(4);
 		root.right = new TreeNode(5);
-		root.right.left = new TreeNode(3);
-		root.right.right = new TreeNode(5);
-		root.left.left = new TreeNode(1);
-		root.left.right = new TreeNode(1);
-		
+		root.right.left = new TreeNode(5);
+		//root.right.right = new TreeNode(5);
+		root.left.left = new TreeNode(4);
+		root.left.right = new TreeNode(4);
+
 		int longestUnivaluePath = longestUnivaluePath(root);
 		System.out.println(longestUnivaluePath);
 	}
 
-	static int longestPath = 0, pathNum = 0;
+	static int ans = 0;
 
 	private static int longestUnivaluePath(TreeNode root) {
-		Integer prev = null;
-		return longestPath(root, prev);
+		getLongestUniValuePath(root);
+		return ans;
 	}
 
-	private static int longestPath(TreeNode root, Integer prev) {
+	private static int getLongestUniValuePath(TreeNode root) {
 		if (root == null) {
-			return pathNum;
+			return 0;
 		}
-		if (prev != null) {
-			if (prev == root.val) {
-				pathNum++;
-			} 
-			if (longestPath < pathNum) {
-				longestPath = pathNum;
-			}
-			if(prev != root.val){
-				pathNum = 0;
-			}
+		int left = getLongestUniValuePath(root.left);
+		int right = getLongestUniValuePath(root.right);
+		int aL = 0, aR = 0;
+		if (root.left != null && root.left.val == root.val) {
+			aL += left + 1;
 		}
-		prev = root.val;
-		longestPath(root.left, prev);
-		longestPath(root.right, prev);
-		return longestPath;
+		if (root.right != null && root.right.val == root.val) {
+			aR += right + 1;
+		}
+		ans = Math.max(ans, aL + aR);
+		return Math.max(aL, aR);
 	}
 
 }

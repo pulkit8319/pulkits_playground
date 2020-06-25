@@ -1,7 +1,7 @@
 package com.pulkit.ds.practice.leetCode.Tree;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 //Given preorder and inorder traversal of a tree, construct the binary tree.
 //Note:
@@ -9,87 +9,38 @@ import java.util.List;
 public class BinaryTreeFromPreOrderAndInOrder {
 
 	public static void main(String[] args) {
-		TreeNode root = new TreeNode(2);
-		root.left = new TreeNode(3);
-		root.right = new TreeNode(1);
-		root.left.left = new TreeNode(3);
-		root.left.right = new TreeNode(1);
-		root.right.right = new TreeNode(1);
-
-		int count = pseudoPalindromicPaths(root);
-		System.out.println(count);
+		int[] preorder = { 1, 2 };
+		int[] inorder = { 2, 1 };
+		TreeNode node = buildTree(preorder, inorder);
+		node.inOrder(node);
 	}
 
-	private static int pseudoPalindromicPaths(TreeNode root) {
-		// return pseudoPalindromicPaths(root, new ArrayList<Integer>());
-		// return pseudoPalindromicPaths(root, new int[10]);
-		return pseudoPalindromicPathsUsingBitManipulation(root, 0);
+	private static TreeNode buildTree(int[] preorder, int[] inorder) {
+		if (inorder.length == 0 || preorder.length == 0) {
+			return null;
+		}
+		Map<Integer, Integer> inMap = new HashMap<Integer, Integer>();
+		for (int i = 0; i < inorder.length; i++) {
+			inMap.put(inorder[i], i);
+		}
+		return buildTree(0, inorder.length - 1, preorder, inorder, inMap);
 	}
 
-	private static int pseudoPalindromicPathsUsingBitManipulation(TreeNode root, int num) {
-		if (root == null) {
-			return 0;
-		}
-		num ^= 1 << (root.val - 1);
-		if (root.left == null && root.right == null) {
-			if ((num & (num - 1)) == 0) {
-				return 1;
-			} else {
-				return 0;
-			}
-		}
-		return pseudoPalindromicPathsUsingBitManipulation(root.left, num)
-				+ pseudoPalindromicPathsUsingBitManipulation(root.right, num);
-	}
+	static int pindex = 0;
 
-	private static int pseudoPalindromicPaths(TreeNode root, int[] arr) {
-
-		if (root == null) {
-			return 0;
+	private static TreeNode buildTree(int start, int end, int[] preorder, int[] inorder, Map<Integer, Integer> inMap) {
+		if (start > end) {
+			return null;
 		}
-		arr[root.val]++;
-		if (root.left == null && root.right == null) {
-			return checkPalindrome(arr) ? 1 : 0;
+		int val = preorder[pindex++];
+		TreeNode root = new TreeNode(val);
+		if (start == end) {
+			return root;
 		}
-		for (int i = 0; i < arr.length; i++) {
-			System.out.println(arr[i]);
-		}
-		return pseudoPalindromicPaths(root.left, arr) + pseudoPalindromicPaths(root.right, arr);
-	}
-
-	private static boolean checkPalindrome(int[] arr) {
-		int miss = 0;
-		for (int i = 0; i < arr.length; i++) {
-			if (arr[i] % 2 != 0) {
-				miss++;
-			}
-			if (miss > 1) {
-				return false;
-			}
-		}
-		return false;
-	}
-
-	private static int pseudoPalindromicPaths(TreeNode root, List<Integer> list) {
-		if (root == null) {
-			return 0;
-		}
-		if (list.contains(root.val)) {
-			list.remove((Integer) root.val);
-		} else {
-			list.add(root.val);
-		}
-		if (root.left == null && root.right == null) {
-			int size = list.size();
-			if (size == 0 || size == 1) {
-				return 1;
-			} else {
-				return 0;
-			}
-		}
-		return pseudoPalindromicPaths(root.left, new ArrayList(list))
-				+ pseudoPalindromicPaths(root.right, new ArrayList(list));
-
+		int index = inMap.get(val);// or use for loop to get index
+		root.left = buildTree(start, index - 1, preorder, inorder, inMap);
+		root.right = buildTree(index + 1, end, preorder, inorder, inMap);
+		return root;
 	}
 
 }
