@@ -1,63 +1,62 @@
 package com.pulkit.ds.practice;
 
 public class EvenOddThread {
-
 	public static void main(String[] args) {
-		PrintNumber pn = new PrintNumber();
-		EvenThread th1 = new EvenThread(pn);
-		OddThread th2 = new OddThread(pn);
-		th1.start();
-		th2.start();
-	}
-
-}
-
-class EvenThread extends Thread {
-	PrintNumber pn;
-
-	public EvenThread(PrintNumber pn) {
-		this.pn = pn;
-	}
-
-	@Override
-	public void run() {
-		while (pn.num < 11) {
-			if (pn.num % 2 == 0) {
-					System.out.print("Even Thread - ");
-					pn.printNum();
-					pn.num++;
+		OddEvenPrint oep = new OddEvenPrint();
+		Thread evenThread = new Thread() {
+			@Override
+			public void run() {
+				oep.printEven();
 			}
-		}
-	}
-
-}
-
-class OddThread extends Thread {
-
-	PrintNumber pn;
-
-	public OddThread(PrintNumber pn) {
-		this.pn = pn;
-	}
-
-	@Override
-	public void run() {
-		while (pn.num < 11) {
-			if (pn.num % 2 == 1) {
-					System.out.print("Odd Thread - ");
-					pn.printNum();
-					pn.num++;
+		};
+		Thread oddThread = new Thread() {
+			@Override
+			public void run() {
+				oep.printOdd();
 			}
-		}
+		};
+		evenThread.start();
+		oddThread.start();
 	}
-
 }
 
-class PrintNumber {
-
+class OddEvenPrint {
 	int num = 1;
+	int max = 15;
+	boolean isOdd = true;
 
-	public void printNum() {
-		System.out.println(num);
+	public void printEven() {
+		while (num < max) {
+			synchronized (this) {
+				if (isOdd) {
+					try {
+						wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				System.out.println("ET called :" + num++);
+				isOdd = true;
+				notify();
+			}
+		}
+	}
+
+	public void printOdd() {
+		while (num < max) {
+			synchronized (this) {
+				if (!isOdd) {
+					try {
+						wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				System.out.println("OT called :" + num++);
+				isOdd = false;
+				notify();
+			}
+
+		}
 	}
 }
