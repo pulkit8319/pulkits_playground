@@ -9,15 +9,15 @@ public class KnapsackRecursive{
     System.out.println(maxValue);
   }
 
-  private static int knapSack(int W, int wt[], int val[], int n)
+  private static int knapSack(int W, int wt[], int val[], int N)
     {
-      if(n==0 || W==0){
+      if(N==0 || W==0){
         return 0;
       }
-      if(wt[n-1]<=W){
-        return Math.max(val[n-1]+knapSack(W-wt[n-1],wt,val,n-1),knapSack(W,wt,val,n-1));
+      if(wt[N-1]<=W){
+        return Math.max(val[N-1] + knapSack(W - wt[N-1], wt, val, N-1), knapSack(W,wt,val,N-1));
       }else{
-        return knapSack(W,wt,val,n-1);
+        return knapSack(W, wt, val, N-1);
       }
     }
 }
