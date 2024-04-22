@@ -4,6 +4,7 @@ import java.io.*;
 
 public class BooleanParenthesization{
 
+//DP
   public static void main(String[] args){
     String s = "T|T&F^T";
     int n = 7;
