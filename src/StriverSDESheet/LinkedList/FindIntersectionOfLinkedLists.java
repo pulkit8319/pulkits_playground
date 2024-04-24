@@ -33,6 +33,7 @@ public class FindIntersectionOfLinkedLists{
         }else{
           nodeB = nodeB.next;
         }
+        diff--;
       }
       while(nodeA!=null && nodeB!=null){
         if(nodeA==nodeB){
